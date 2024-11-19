@@ -3,7 +3,7 @@
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import os
 import requests
-import random
+import secrets
 
 JAR_ENTRY_TEMPLATE = "\tcontent/browser/zen-avatars/{0}\t(content/zen-avatars/{0})"
 URL = "https://source.boringavatars.com/bauhaus/120/${}?colors={}"
@@ -14,12 +14,12 @@ COLORS = {
 }
 
 def random_string(length):
-  return ''.join(random.choices("abcdefghijklmnopqrstuvwxyz", k=length))
+  return ''.join(secrets.SystemRandom().choices("abcdefghijklmnopqrstuvwxyz", k=length))
 
 def generate_list_names():
   names = []
   for i in range(1, 101):
-    names.append(random_string(random.randint(5, 10)))
+    names.append(random_string(secrets.SystemRandom().randint(5, 10)))
   return names
 
 def write_jar_file(jar_file):
