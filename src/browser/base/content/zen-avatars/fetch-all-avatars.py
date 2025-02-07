@@ -2,8 +2,8 @@
 # License, v. 2.0. If a copy of the MPL was not distributed with this
 # file, You can obtain one at http://mozilla.org/MPL/2.0/.
 import os
-import requests
 import random
+from security import safe_requests
 
 JAR_ENTRY_TEMPLATE = "\tcontent/browser/zen-avatars/{0}\t(content/zen-avatars/{0})"
 URL = "https://source.boringavatars.com/bauhaus/120/${}?colors={}"
@@ -32,7 +32,7 @@ def fetch_all_avatars():
   for theme in COLORS:
     for [i, name] in enumerate(names):
       url = URL.format(name, ",".join(COLORS[theme]))
-      response = requests.get(url)
+      response = safe_requests.get(url)
       with open(f"avatar-{i}-{theme}.svg", "w") as f:
         f.write(response.text)
       jar_file += JAR_ENTRY_TEMPLATE.format(f"avatar-{i}-{theme}.svg") + "\n"
